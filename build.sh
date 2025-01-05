@@ -11,13 +11,16 @@ ln -sr /etc/containers/systemd/*.container /usr/lib/bootc/bound-images.d/
 
 # Packages
 
+
 # ZFS Kernel Module
 # Documentation on https://openzfs.github.io/openzfs-docs/Getting%20Started/RHEL-based%20distro/index.html
 # Prefer DKMS installation since it has support for kernels that arent the current EL ones
-# This also needs to be sequential, else DKMS wont be able to build the kernel module
 dnf -y install https://zfsonlinux.org/epel/zfs-release-2-3$(rpm --eval "%{dist}").noarch.rpm
 dnf -y install epel-release
-dnf -y install kernel-devel
+# Kernel needs to be updated to get ZFS support
+for pkg in kernel kernel-core kernel-modules kernel-modules-core ; do rpm --erase $pkg --nodeps ; done
+dnf install -y kernel kernel-core kernel-modules{,-core,-extra}
+dnf -y install kernel-devel # Is also required for building DKMS module
 dnf -y install zfs
 echo "zfs" | tee /etc/modules-load.d/zfs.conf
 
