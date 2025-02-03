@@ -11,7 +11,7 @@ ln -sr /etc/containers/systemd/*.container /usr/lib/bootc/bound-images.d/
 
 # Packages
 
-dnf install -y avahi cockpit cockpit-machines cockpit-podman cockpit-files libvirt tmux vim firewalld
+dnf install -y avahi cockpit cockpit-machines cockpit-podman cockpit-files libvirt tmux vim firewalld qemu-guest-agent
 
 # Docker install: https://docs.docker.com/engine/install/centos/#install-using-the-repository
 dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
